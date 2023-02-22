@@ -1,1 +1,29 @@
-Hallo Welt!
+<div class="container">
+  <h1>T-Shirt List</h1>
+</div>
+
+<div id="gallery">
+
+  {{#each pics }}
+  <div class="box">
+    <img src="{{this.file}}" alt="image1">
+    <div class="caption">
+      <p>{{this.name}}</p>
+    </div>
+  </div>
+  {{/each}}
+  
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script src="image-video-lightbox-lbt/js/jquery.lbt-lightbox.js"></script>
+<script>
+  $('#gallery').lbtLightBox({
+    qtd_pagination: 6,
+    pagination_width: "160px",
+    pagination_height: "160px",
+    custom_children: ".box img",
+    captions: true,
+    captions_selector: ".caption p",
+  });
+</script>

@@ -16,8 +16,6 @@ const http = require('http');
 const express = require('express');
 const exphbs = require('express-handlebars');
 
-
-
 const app = express();
 var hbs = exphbs.create({
   helpers: {},
@@ -28,7 +26,8 @@ var hbs = exphbs.create({
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
 
-app.use(express.static(FOLDER_PATH));
+//app.use(express.static(FOLDER_PATH));
+app.use(express.static('public'));
 
 app.use(async function (req, res, next) {
   if (typeof req.custom_data == 'undefined') {
@@ -40,9 +39,12 @@ app.use(async function (req, res, next) {
   next();
 });
 
-
-
 app.get('/', async function (req, res, next) {
+
+  req.custom_data.pics=[];
+
+  req.custom_data.pics[req.custom_data.pics.length]={name:'20230222', file: 'test.jpg'};
+  req.custom_data.pics[req.custom_data.pics.length]={name:'20230223', file: 'test2.jpg'};
 
   // Get all Files! And Stuff
 
