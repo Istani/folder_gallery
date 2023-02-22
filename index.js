@@ -26,7 +26,7 @@ var hbs = exphbs.create({
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
 
-//app.use(express.static(FOLDER_PATH));
+app.use(express.static(FOLDER_PATH));
 app.use(express.static('public'));
 
 app.use(async function (req, res, next) {
@@ -40,11 +40,14 @@ app.use(async function (req, res, next) {
 });
 
 app.get('/', async function (req, res, next) {
-
   req.custom_data.pics=[];
 
-  req.custom_data.pics[req.custom_data.pics.length]={name:'20230222', file: 'test.jpg'};
-  req.custom_data.pics[req.custom_data.pics.length]={name:'20230223', file: 'test2.jpg'};
+  fs.readdirSync(FOLDER_PATH).forEach(tmp_file => {
+    if (!tmp_file.startsWith('.trashed')) {
+      req.custom_data.pics[req.custom_data.pics.length]={name: tmp_file, file: tmp_file};
+    }
+  });
+  req.custom_data.pics.reverse();
 
   // Get all Files! And Stuff
 
